@@ -9,15 +9,15 @@ const app = express();
 
 app.use( cors() );
 
+//Body Parser
+app.use( express.json() );
+
 //Database Connection
 dbConnection(process.env.DB_URL);
 
-app.get('/', ( req, res) =>{
-    res.json({
-        ok: true,
-        message: "Hola mundo!"
-    })
-})
+//Routes
+app.use( '/api/users', require('./routes/users') );
+app.use( '/api/auth', require('./routes/auth') );
 
 app.listen(process.env.port, () => {
     console.log(`Listen port: ${ process.env.port }`);

@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "accepts": "^2.0.0",
+    "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "bson": "^6.10.4",
     "bytes": "^3.1.2",
@@ -26,6 +27,7 @@
     "escape-html": "^1.0.3",
     "etag": "^1.8.1",
     "express": "^5.1.0",
+    "express-validator": "^7.2.1",
     "finalhandler": "^2.1.0",
     "forwarded": "^0.2.0",
     "fresh": "^2.0.0",
@@ -40,6 +42,7 @@
     "inherits": "^2.0.4",
     "ipaddr.js": "^1.9.1",
     "is-promise": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
     "kareem": "^2.6.3",
     "math-intrinsics": "^1.1.0",
     "media-typer": "^1.1.0",
