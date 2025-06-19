@@ -9,8 +9,20 @@ class UserRepository {
         }
     }
 
-    static async findAll(){
-        return await User.find();
+    static async find(regx){
+        return await User.find({ firstname: regx })
+    }
+
+    static async findAll(from){
+
+        const fromNumber = Number(from) || 0;
+        
+        return await Promise.all([
+            User.find({}, 'firstname lastname email role google')
+                .skip(fromNumber)
+                .limit(5),
+            User.countDocuments(),  
+        ]);
     }
 
     static async findUserByEmail(email) {

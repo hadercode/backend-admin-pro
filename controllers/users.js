@@ -11,8 +11,9 @@ const UserRepository  = require('../repositories/user');
 /* GET */
 const getUsers = async (req, res) => {
     try {
-        const users = await UserRepository.findAll();
-        successResponse(res, { users });
+        const { from } = req.query;
+        const [ users, total ] = await UserRepository.findAll(from);
+        successResponse(res, { users, total });
     } catch (error) {
         handleError(res, error);
     }
