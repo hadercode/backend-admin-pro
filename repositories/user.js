@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user/user');
+const { USER_ROLE } = require('../constants/config');
 
 class UserRepository { 
 
@@ -34,10 +35,33 @@ class UserRepository {
         const { password } = body;
         const user = new User(body);
 
-        //Encrypt Password 
-        const salt = bcrypt.genSaltSync();
-        user.password = bcrypt.hashSync(password, salt);
+        if(body.password !== "@@@"){
+            //Encrypt Password 
+            const salt = bcrypt.genSaltSync();
+            user.password = bcrypt.hashSync(password, salt);
+        }
         
+        return await user.save();
+    }
+
+    static async createByGoogle (data) {
+
+        let user;
+        const userExist = await User.findOne({ email: data.email});
+
+        if(!userExist){
+            user = new User({
+                ...data,
+                password: '@@@',
+                google: true
+            });
+        }else{
+            user = userExist;
+            user.img = data.img,
+            user.password = "@@@"
+            user.google = true
+        }
+
         return await user.save();
     }
 
