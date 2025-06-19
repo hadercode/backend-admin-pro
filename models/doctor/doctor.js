@@ -29,6 +29,10 @@ const DoctorSchema = Schema({
         required: true,
         type: Schema.Types.ObjectId,
         ref: 'Hospital'
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
     
 }, { collection: 'Doctors' })//Set Collection Name

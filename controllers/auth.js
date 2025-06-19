@@ -33,12 +33,25 @@ const googleSignIn = async (req, res) => {
         successResponse(res, { ...data, token });   
 
     } catch (error) {
-        console.log(error);
+        handleError(res, { message: error.message });
+    }
+}
+
+const renewToken = async (req, res) => {
+    
+    try {
+
+        const uid = req.uid;
+        const token = await generateJWT(uid);
+
+        successResponse(res, { token });   
+    } catch (error) {
         handleError(res, { message: error.message });
     }
 }
 
 module.exports = {
     login,
-    googleSignIn
+    googleSignIn,
+    renewToken
 }

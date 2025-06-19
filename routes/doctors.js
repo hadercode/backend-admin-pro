@@ -14,7 +14,7 @@ const router = Router();
 
 router.get('/', verifyToken, getDoctors);
 router.post('/', doctorValidation, createDoctor);
-router.put('/:id', updateDoctor);
-router.delete('/:id', deleteDoctor);
+router.put('/:id', doctorValidation, updateDoctor);
+router.delete('/:id', verifyToken, deleteDoctor);
 
 module.exports = router;

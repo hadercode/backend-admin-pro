@@ -22,7 +22,7 @@ const getDoctors = async (req, res) => {
 /* POST */
 const createDoctor = async (req, res) => {     
     try {
-        const doctor = await DoctorRepository.create(req);
+        const doctor = await DoctorRepository.create(req.body);
         successResponse(res, { doctor });
     } catch (error) {
         handleError(res, error);
@@ -31,12 +31,31 @@ const createDoctor = async (req, res) => {
 
 /* PUT */
 const updateDoctor = async (req, res) => { 
-    successResponse(res, { message: "updateDoctor" });
+    try {
+        
+        const id = req.params.id;
+        req.body.user = req.uid;
+
+        const doctor = await DoctorRepository.update(id, req.body);
+
+        successResponse(res, { doctor });
+    } catch (error) {
+        console.log(error);
+        handleError(res, { message: `Error al actualizar médico`});
+    }
 }
 
 /* DELETE */
 const deleteDoctor = async (req, res) => { 
-    successResponse(res, { message: "deleteDoctor" });
+    try {
+
+        const id = req.params.id;
+        await DoctorRepository.delete(id);
+
+        successResponse(res, { message: "Médico eliminado!" });
+    } catch (error) {
+        handleError(res, { message: `Error al eliminar médico`});
+    }
 }
 
 module.exports = {

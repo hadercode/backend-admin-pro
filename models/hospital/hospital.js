@@ -9,9 +9,13 @@ const HospitalSchema = Schema({
         type: String,
     },
     user: {
-        required: true,
+        required: false,
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
 }, { collection: 'Hospitals' })//Set Collection Name
 

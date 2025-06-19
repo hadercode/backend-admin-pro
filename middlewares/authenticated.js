@@ -13,6 +13,7 @@ const verifyToken = (req, res, next) => {
         //** JWT Structure { uid, iat, exp }*/
         const { uid } = jwt.verify(token, process.env.JWT_SECRET);
         req.uid = uid;
+        console.log(uid);
         next();
     } catch (error) {
         handleError(res, { message: "Invalid Token" })        

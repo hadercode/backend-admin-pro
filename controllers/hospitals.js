@@ -1,8 +1,5 @@
 /** PATH -> - api/hospitals **/
-const { 
-    successResponse, 
-    handleError, 
-    notFoundResponse } = require("../util/response");
+const { successResponse, handleError } = require("../util/response");
 
 const HospitalRepository  = require('../repositories/hospital');
 
@@ -18,28 +15,51 @@ const getHospitals = async (req, res) => {
 /* POST */
 const createHospital = async (req, res) => {
     
-    const uid = req.uid;
-
+    
     try {
+        
+        const uid = req.uid;
+
         const hospital = await HospitalRepository.create({
             ...req.body,
-            user: uid
+            uid
         });
 
         successResponse(res, { hospital });
     } catch (error) {
+        console.log(error);
         handleError(res, error);
     }
 }
 
 /* PUT */
 const updateHospital = async (req, res) => { 
-    successResponse(res, { message: "updateHospital" });
+    try {
+        
+        const id = req.params.id;
+        req.body.user = req.uid;
+
+        const hospital = await HospitalRepository.update(id, req.body);
+
+        successResponse(res, { hospital });
+    } catch (error) {
+        handleError(res, { message: `Error al actualizar hospital`});
+    }
 }
 
 /* DELETE */
 const deleteHospital = async (req, res) => { 
-    successResponse(res, { message: "deleteHospital" });
+
+    try {
+
+        const id = req.params.id;
+        await HospitalRepository.delete(id);
+
+        successResponse(res, { message: "Hospital eliminado!" });
+    } catch (error) {
+        handleError(res, { message: `Error al eliminar hospital`});
+    }
+
 }
 
 module.exports = {
